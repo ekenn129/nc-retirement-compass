@@ -1,0 +1,1 @@
+import "./globals.css";export const metadata={title:"NC Retirement Compass | LGERS Pension Calculator",description:"Plan your North Carolina LGERS retirement."};export default function RootLayout({children}){return <html lang="en"><body>{children}</body></html>}
