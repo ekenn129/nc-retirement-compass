@@ -5,12 +5,12 @@ const yrs=(y,m)=>Number(y||0)+Number(m||0)/12;
 const ym=v=>{const total=Math.max(0,Math.round(Number(v||0)*12)),y=Math.floor(total/12),m=total%12;return (y?y+" year"+(y===1?"":"s"):"")+(y&&m?", ":"")+(m?m+" month"+(m===1?"":"s"):y?"":"0 months")};
 const ageYM=v=>ym(v);
 const untilYM=(a,b)=>ym(between(a,b));
-const ageOn=(dob,date)=>(new Date(date+"T00:00:00")-new Date(dob+"T00:00:00"))/(365.2425*86400000);
-const between=(a,b)=>Math.max(0,(new Date(b+"T00:00:00")-new Date(a+"T00:00:00"))/(365.2425*86400000));
+const ageOn=(dob,date)=>{if(!dob||!date)return 0;const v=(new Date(date+"T00:00:00")-new Date(dob+"T00:00:00"))/(365.2425*86400000);return Number.isFinite(v)?Math.max(0,v):0};
+const between=(a,b)=>{if(!a||!b)return 0;const v=(new Date(b+"T00:00:00")-new Date(a+"T00:00:00"))/(365.2425*86400000);return Number.isFinite(v)?Math.max(0,v):0};
 function addYears(date,y){const d=new Date(date+"T00:00:00");d.setFullYear(d.getFullYear()+y);return d.toISOString().slice(0,10)}
 function addMonths(date,m){const d=new Date(date+"T00:00:00");d.setMonth(d.getMonth()+m);return d.toISOString().slice(0,10)}
-const niceDate=d=>new Date(d+"T00:00:00").toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"});
-function dateAtAge(dob,targetAge,today){const b=new Date(dob+"T00:00:00"),d=new Date(Date.UTC(b.getUTCFullYear()+targetAge,b.getUTCMonth(),b.getUTCDate()));const iso=d.toISOString().slice(0,10);return iso<today?today:iso}
+const niceDate=d=>d?new Date(d+"T00:00:00").toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"}):"—";
+function dateAtAge(dob,targetAge,today){if(!dob)return today;const b=new Date(dob+"T00:00:00");if(Number.isNaN(b.getTime()))return today;const d=new Date(Date.UTC(b.getUTCFullYear()+targetAge,b.getUTCMonth(),b.getUTCDate()));const iso=d.toISOString().slice(0,10);return iso<today?today:iso}
 function sickCreditFromHours(hours,monthlyAccrual){if(!(hours>0)||!(monthlyAccrual>0))return{days:0,months:0,years:0};const days=hours/monthlyAccrual,months=Math.ceil(days/20);return{days,months,years:months/12}}
 function fireRed(age,s){if(s>=30||age>=65||(age>=60&&s>=25))return 1;if(age>=60&&s>=5)return Math.min(1,.85+(age-60)*.03);if(age>=55&&s>=5){if(s>=29)return .95;if(s>=28)return .90;if(s>=27)return .85;if(s>=26)return .80;if(s>=25)return .75;if(s>=24)return .70;if(s>=23)return .65;return .60}return 0}
 function genRed(age,s){if(s>=30||age>=65||(age>=60&&s>=25))return 1;if(age>=60&&s>=5)return Math.min(1,.85+(age-60)*.03);if(age>=50&&s>=20){if(s>=29)return .95;if(s>=28)return .90;if(s>=27)return .85;if(s>=26)return .80;if(s>=25)return .75;if(s>=24)return .70;if(s>=23)return .65;return .60}return 0}
