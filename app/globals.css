@@ -19,3 +19,19 @@ input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 
 .optionRow.featured>strong{color:#fff;text-shadow:0 0 16px rgba(25,167,255,.28)}
 .leaveImpactGrid b,.projectionSummary b{font-variant-numeric:tabular-nums}
 ::selection{background:rgba(25,167,255,.25)}
+
+/* Compact Run Compass-style floating fields */
+.field{position:relative;display:block;margin:10px 0;font-weight:600;font-size:13px}
+.field>.floatLabel{position:absolute;z-index:3;left:13px;top:16px;max-width:calc(100% - 38px);color:#687b87;font-size:14px;line-height:1;pointer-events:none;transform-origin:left top;transition:top .15s ease,font-size .15s ease,color .15s ease;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.field>.floatLabel .info{pointer-events:auto}
+.field:focus-within>.floatLabel,.field:has(input:not(:placeholder-shown))>.floatLabel,.field:has(select)>.floatLabel{top:7px;font-size:9px;letter-spacing:.055em;text-transform:uppercase;color:#4f7081;font-weight:800}
+.field input,.field select{height:50px;min-height:50px;padding:20px 12px 5px;border-radius:7px}
+.field select{padding-top:17px}
+.field>small{display:block;margin:4px 3px 0;color:#71838d;font-size:10px;line-height:1.25}
+.grid2{gap:12px}.formPanel{padding:28px}.gap{margin-top:27px;padding-top:23px}
+.suffix input{padding-right:34px}.suffix i{top:19px}
+.info{position:relative;overflow:visible}
+.tip{position:absolute;z-index:1000;width:min(270px,calc(100vw - 40px));left:50%;right:auto;top:24px;transform:translateX(-50%);white-space:normal;overflow:visible;text-transform:none;letter-spacing:normal}
+.field:nth-child(2n) .info .tip{left:auto;right:-8px;transform:none}
+.formPanel{overflow:visible}.calc{overflow:visible}
+@media(max-width:800px){.field>.floatLabel{max-width:calc(100% - 30px)}.tip,.field:nth-child(2n) .info .tip{position:fixed;left:20px;right:20px;top:auto;bottom:24px;width:auto;transform:none;max-height:45vh;overflow:auto;box-shadow:0 14px 50px rgba(0,0,0,.3)}}
