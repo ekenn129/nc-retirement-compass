@@ -4,7 +4,9 @@ const money=n=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",ma
 const yrs=(y,m)=>Number(y||0)+Number(m||0)/12;
 const ageOn=(dob,date)=>(new Date(date+"T00:00:00")-new Date(dob+"T00:00:00"))/(365.2425*86400000);
 const between=(a,b)=>Math.max(0,(new Date(b+"T00:00:00")-new Date(a+"T00:00:00"))/(365.2425*86400000));
-function addYears(date,y){const d=new Date(date+"T00:00:00");d.setFullYear(d.getFullYear()+y);return d.toISOString().slice(0,10)}\nfunction addMonths(date,m){const d=new Date(date+"T00:00:00");d.setMonth(d.getMonth()+m);return d.toISOString().slice(0,10)}\nconst niceDate=d=>new Date(d+"T00:00:00").toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"});
+function addYears(date,y){const d=new Date(date+"T00:00:00");d.setFullYear(d.getFullYear()+y);return d.toISOString().slice(0,10)}
+function addMonths(date,m){const d=new Date(date+"T00:00:00");d.setMonth(d.getMonth()+m);return d.toISOString().slice(0,10)}
+const niceDate=d=>new Date(d+"T00:00:00").toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"});
 function fireRed(age,s){if(s>=30||age>=65||(age>=60&&s>=25))return 1;if(age>=60&&s>=5)return Math.min(1,.85+(age-60)*.03);if(age>=55&&s>=5){if(s>=29)return .95;if(s>=28)return .90;if(s>=27)return .85;if(s>=26)return .80;if(s>=25)return .75;if(s>=24)return .70;if(s>=23)return .65;return .60}return 0}
 function genRed(age,s){if(s>=30||age>=65||(age>=60&&s>=25))return 1;if(age>=60&&s>=5)return Math.min(1,.85+(age-60)*.03);if(age>=50&&s>=20){if(s>=29)return .95;if(s>=28)return .90;if(s>=27)return .85;if(s>=26)return .80;if(s>=25)return .75;if(s>=24)return .70;if(s>=23)return .65;return .60}return 0}
 function leoRed(age,s,l){if(s>=30||(age>=55&&l>=5))return 1;if((age>=50&&l>=15)||(s>=25&&l>=15)){if(age>=54)return .96;if(age>=53)return s>=29?.95:.92;if(age>=52)return s>=29?.95:s>=28?.90:.88;if(age>=51)return s>=29?.95:s>=28?.90:s>=27?.85:.84;if(age>=50)return s>=29?.95:s>=28?.90:s>=27?.85:.80}return 0}
