@@ -18,7 +18,7 @@ function leoRed(age,s,l){if(s>=30||(age>=55&&l>=5))return 1;if((age>=50&&l>=15)|
 const red=(t,a,s,l)=>t==="leo"?leoRed(a,s,l):t==="fire"?fireRed(a,s):genRed(a,s);
 const label=r=>r===1?"Unreduced retirement":r>0?"Reduced retirement":"Not yet eligible to begin benefit";
 function Info({text}){return <span className="info" tabIndex="0">?<span className="tip">{text}</span></span>}
-function Field({label,children,hint,info}){return <label className="field"><span>{label} {info&&<Info text={info}/>}</span>{children}{hint&&<small>{hint}</small>}</label>}
+function Field({label,children,hint,info}){return <label className="field"><span className="floatLabel">{label} {info&&<Info text={info}/>}</span>{children}{hint&&<small>{hint}</small>}</label>}
 export default function Home(){
  const today=new Date().toISOString().slice(0,10);
  const [type,setType]=useState("fire"),[dob,setDob]=useState("1987-12-01"),[sy,setSy]=useState("18"),[sm,setSm]=useState("0"),[leoY,setLeoY]=useState("18"),[afc,setAfc]=useState("85000"),[salary,setSalary]=useState("90000"),[raise,setRaise]=useState("3"),[sick,setSick]=useState("0"),[sickMonthly,setSickMonthly]=useState("8"),[sickUsePct,setSickUsePct]=useState("0"),[projectSick,setProjectSick]=useState(true),[vacToSick,setVacToSick]=useState(true),[vacEarnAnnual,setVacEarnAnnual]=useState("120"),[vacUsePct,setVacUsePct]=useState("100"),[vacConvertPct,setVacConvertPct]=useState("100"),[useSick,setUseSick]=useState(true),[beneficiaryDob,setBeneficiaryDob]=useState("1991-12-01"),[retire,setRetire]=useState(addYears(today,12));
