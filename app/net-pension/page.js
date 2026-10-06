@@ -1,5 +1,6 @@
 "use client";
 import {useEffect,useState} from "react";
+import DateInput from "../date-input";
 import Link from "next/link";
 import {NetEstimate,TaxSettings} from "../net-estimate";
 import {DEFAULT_TAX,estimatePensionNet} from "../pension-net.mjs";
@@ -30,7 +31,7 @@ export default function PensionPage(){
    <section className="retirementCards" aria-label="Three retirement date comparisons">
     {results.map((r,i)=><article className="retirementDateCard" key={i} aria-label={"Retirement option "+(i+1)}>
      <div className="dateCardHeader"><span>OPTION {i+1}</span>{i===0&&<small>Comparison baseline</small>}</div>
-     <label className="compareDate"><span>Retirement date · Option {i+1}</span><input type="date" min={pension.asOf} value={dates[i]} onChange={e=>update(i,e.target.value)}/></label>
+     <label className="compareDate"><span>Retirement date · Option {i+1}</span><DateInput label={"Retirement date · Option "+(i+1)} min={pension.asOf} value={dates[i]} onChange={d=>update(i,d)}/></label>
      <div className="dateNudges"><button type="button" onClick={()=>shift(i,-12)} disabled={!dates[i]}>−1 year</button><button type="button" onClick={()=>shift(i,-1)} disabled={!dates[i]}>−1 month</button><button type="button" onClick={()=>shift(i,1)} disabled={!dates[i]}>+1 month</button><button type="button" onClick={()=>shift(i,12)} disabled={!dates[i]}>+1 year</button></div>
      <button type="button" className="dateOriginal" onClick={()=>update(i,pension.date)}>Use calculated retirement date</button>
      {!r?<p className="compareInvalid">Choose a date on or after {pension.asOf}.</p>:<>
