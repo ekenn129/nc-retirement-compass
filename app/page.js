@@ -76,7 +76,7 @@ export default function Home(){
  function openPension(){
   const result=mode==="basic"?basic:(c.r===1?{date:retire||today,age:c.age,service:c.service,projectedAfc:c.pa,monthly:c.monthly,reason:"Unreduced retirement at your selected date",sickMonths:useSick?c.sickMonths:0}:earliestMax);
   if(!result)return;
-  const calculation={mode,type,dob,date:result.date,age:result.age,service:result.service,afc:mode==="basic"?Number(afc||0):result.projectedAfc,monthly:result.monthly,currentService:yrs(sy,sm),sickMonths:mode==="basic"?0:(result.sickMonths||0),reason:result.reason};
+  const calculation={asOf:today,mode,type,dob,date:result.date,age:result.age,service:result.service,afc:mode==="basic"?Number(afc||0):result.projectedAfc,monthly:result.monthly,currentService:yrs(sy,sm),sickMonths:mode==="basic"?0:(result.sickMonths||0),reason:result.reason};
   try{
    sessionStorage.setItem("retirement-pension",JSON.stringify(calculation));
    sessionStorage.setItem("retirement-form",JSON.stringify({mode,type,dob,sy,sm,leoY,afc,salary,raise,sick,sickMonthly,sickUsePct,projectSick,vacToSick,vacEarnAnnual,vacUsePct,vacConvertPct,useSick,beneficiaryDob,retire}));
@@ -116,5 +116,6 @@ export default function Home(){
  <section className="notice"><b>Planning estimate, not an official benefit calculation.</b><p>NC Retirement Compass is an independent educational tool and is not affiliated with the North Carolina Retirement Systems. Actual benefits are determined by the Retirement Systems Division under applicable law. Confirm retirement decisions with your official ORBIT estimate.</p><div><a href="https://www.myncretirement.com/" target="_blank" rel="noreferrer">NC Retirement Systems ↗</a><a href="https://orbit.myncretirement.com/" target="_blank" rel="noreferrer">ORBIT ↗</a></div></section>
  <footer><b>NC RETIREMENT COMPASS</b><span>Clearer retirement planning for North Carolina public servants.</span></footer></main>
 }
+
 
 
