@@ -13,7 +13,13 @@ export default function DateInput({value,onChange,min,max,label}){
  const [text,setText]=useState(display(value)),[error,setError]=useState("");const picker=useRef(null);
  useEffect(()=>{setText(display(value));setError("")},[value]);
  const valid=t=>{const iso=parse(t);return iso&&(!min||iso>=min)&&(!max||iso<=max)?iso:""};
- function change(t){setText(t);setError("");if(!t)onChange("");else{const iso=valid(t);if(iso)onChange(iso)}}
+ function change(event){
+  const t=event.target.value;
+  const isoPaste=/^\d{4}-\d{2}-\d{2}$/.test(t)?parse(t):"";
+  const digits=(isoPaste?display(isoPaste):t).replace(/\D/g,"").slice(0,8);
+  const formatted=digits.slice(0,2)+(digits.length>2?"/"+digits.slice(2,4):"")+(digits.length>4?"/"+digits.slice(4):"");
+  setText(formatted);setError("");if(!digits)onChange("");else{const iso=valid(formatted);if(iso)onChange(iso)}
+ }
  function finish(){if(!text)return;const iso=valid(text);if(iso){setText(display(iso));setError("")}else setError(min?"Enter a valid date on or after "+display(min)+".":"Enter a valid date as MM/DD/YYYY.")}
- return <div className="easyDate"><input type="text" aria-label={label} placeholder="MM/DD/YYYY" inputMode="numeric" autoComplete="off" value={text} aria-invalid={!!error} onChange={e=>change(e.target.value)} onBlur={finish}/><button type="button" className="datePickerButton" aria-label={"Open calendar for "+label} title="Choose date from calendar" onClick={()=>picker.current?.showPicker?.()}>▦</button><input className="calendarInput" ref={picker} type="date" aria-label={label+" calendar"} tabIndex={-1} value={value} min={min} max={max} onChange={e=>{onChange(e.target.value);setText(display(e.target.value));setError("")}}/>{error&&<small className="dateError" role="alert">{error}</small>}</div>;
+ return <div className="easyDate"><input type="text" aria-label={label} placeholder="MM/DD/YYYY" inputMode="numeric" autoComplete="off" value={text} aria-invalid={!!error} onChange={change} onBlur={finish}/><button type="button" className="datePickerButton" aria-label={"Open calendar for "+label} title="Choose date from calendar" onClick={()=>picker.current?.showPicker?.()}>▦</button><input className="calendarInput" ref={picker} type="date" aria-label={label+" calendar"} tabIndex={-1} value={value} min={min} max={max} onChange={e=>{onChange(e.target.value);setText(display(e.target.value));setError("")}}/>{error&&<small className="dateError" role="alert">{error}</small>}</div>;
 }
